@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
+import { DataService } from '../../services/data.service';
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -13,7 +14,7 @@ export class LoginPage implements OnInit {
     email:'',
     password:''
   }
-  constructor(  private router:Router) { 
+  constructor(  private router:Router,private service:DataService ) { 
 
   
   }

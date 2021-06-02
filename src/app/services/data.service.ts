@@ -53,7 +53,7 @@ export class DataService {
                   role: 'cancel',
                   cssClass: 'secondary',
                   handler: (blah) => {
-                    console.log('Confirm Cancel: blah');
+                    console.log('Confirm Cancel: ');
                   }
                 }, {
                   text: 'OK',
@@ -68,14 +68,14 @@ export class DataService {
       }
    
  
-  // CONNEXION CLIENT
+  
   connexionClient(data:{email:string,password:string}){
       this.httpClient.post<{id:string}>(this.urlRoute + 'clients/connexion',data).subscribe(res=>{
          if(res[0].id){
            this.storage.set('session',res[0].id);
            this.router.navigateByUrl('tabs/tab1');
          }else{
-           this.presentAlertConfirm('<h4 style="color:red;">Donneés Icorrect </h4>!!!');
+           this.presentAlertConfirm('<h4 style="color:red;">Invalid nom d\'utilisateur ou mot de passe </h4>!!!');
          }
       });
   }

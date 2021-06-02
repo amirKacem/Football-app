@@ -14,9 +14,7 @@ export class LoginPage implements OnInit {
     email:'',
     password:''
   }
-  constructor(  private router:Router,private service:DataService ) { 
-
-  
+  constructor(  private router:Router ) { 
   }
 
   ngOnInit() {
@@ -25,5 +23,5 @@ export class LoginPage implements OnInit {
   register(){
     this.router.navigateByUrl('register');
   }
-
+  connexionClient(){}
 }

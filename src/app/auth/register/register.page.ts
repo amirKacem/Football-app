@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
+import { Client } from 'src/app/models/client';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -7,7 +9,7 @@ import {  Router } from '@angular/router';
 })
 export class RegisterPage implements OnInit {
 
-  data = {
+  data:Client = {
     id:0,
     nom:'',
     prenom:'',
@@ -21,12 +23,14 @@ export class RegisterPage implements OnInit {
     longitude:0,
     ville:'',
     coverture:'',
-    url:'',
     type:''
   }
   myphoto: any;
 
-  constructor(private router:Router) { }
+  constructor(private router:Router,private alertController:AlertController) { 
+
+    this.presentAlertConfirm();
+  }
 
   ngOnInit() {
   }
@@ -39,4 +43,44 @@ export class RegisterPage implements OnInit {
 
   }
 
+
+  async presentAlertConfirm() {
+    const alert = await this.alertController.create({
+      header: 'avez-vous!',
+      message: '<strong>Êtes-vous club ou bien un client ??</strong>',
+      buttons: [
+        {
+          text: 'club',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            this.data.type = 'club';
+            document.querySelectorAll('.client').forEach(data=>{
+                data.remove();
+            });
+         
+          }
+        }, {
+          text: 'client',
+          handler: () => {
+            console.log('Vous Êtes client');
+            this.data.type = 'client';
+            document.querySelectorAll('.club').forEach(data=>{
+              data.remove();
+          });
+          }
+        }
+      ],
+      backdropDismiss: false
+    });
+
+    await alert.present();
+  }
+
+  doRefresh(event) {
+    setTimeout(() => {
+      this.presentAlertConfirm();
+      event.target.complete();
+    }, 2000);
+  }
 }

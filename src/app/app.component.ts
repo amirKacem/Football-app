@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { Storage } from '@ionic/storage-angular';
-import {NavController} from '@ionic/angular';
+import { StorageService } from './services/storage.service';
+
+import {  Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -8,25 +9,23 @@ import {NavController} from '@ionic/angular';
 })
 export class AppComponent {
 
-  constructor(private storage: Storage,private navCtrl:NavController) {
-    
-    this.initalizae
+  constructor(private storageService: StorageService,private router:Router) {
+    this.init();
   }
-  async ngOnInit() {
+
     
-    await this.storage.create();
-  }
+   init() {
+      this.storageService.get('session').then((res) => {  
+        if (res) {
+          this.router.navigateByUrl('/home');
+        }
+     else {
+          this.router.navigateByUrl('login');
+        }
+    });
+
+   }
   
  
-  initalizae(){
-    this.storage.get('session').then((res) => {
-      console.log(res);
-       this.navCtrl.navigateRoot('/login');
-       if(res==null){
-      }else{
-        this.navCtrl.navigateRoot('/home');
-      }
-    });
-  }
 
 }

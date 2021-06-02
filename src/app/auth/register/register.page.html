@@ -11,19 +11,14 @@
             <ion-row style="width:100px;height:100px;margin: 0 auto !important;">
                 <ion-col>
                     <ion-avatar>
-                        <ion-img *ngIf="!data.url" style="width:100px;height:100px;" src="../assets/img/avatar.jpeg"></ion-img>
-                        <ion-img *ngIf="data.url" style="width:100px;height:100px;" [src]="data.url"></ion-img>
+                        <ion-img style="width:100px;height:100px;" src="../assets/img/avatar.jpeg"></ion-img>
+                       
                     </ion-avatar>
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col size="12">
-                    <ion-item>
-                        <ion-button size="small" color="danger" style="width: 100%;" (click)="presentActionSheet()">
-                            choisir une photo de profile&nbsp;
-                            <ion-icon name="cloud-upload"></ion-icon>
-                        </ion-button>
-                    </ion-item>
+                
                     <ion-item class="club">
                         <ion-label position="floating">Nom Club</ion-label>
                         <ion-input type="text" required [(ngModel)]="data.brand_name" name="brand_name"></ion-input>

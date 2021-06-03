@@ -1,8 +1,12 @@
 export interface Annonce{
+    nom:string,
+    prenom:string,
+    brand_name:string
+    url:string,
+    type:string,
     id:number,
-    userId:number,
+    image:string,
     titre:string,
     pub:string,
-    image:string,
-    dateCreation:string
+    updated_at:string
 }

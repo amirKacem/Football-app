@@ -31,5 +31,6 @@ if(isset($data->method)){
         exit;
 
     }
+    
 
 }

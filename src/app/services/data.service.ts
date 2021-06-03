@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { Annonce } from '../models/Annonce';
 import { Client } from '../models/client';
 import { StorageService } from './storage.service';
 @Injectable({
@@ -56,7 +57,7 @@ export class DataService {
                      }else{
                       this.presentAlertConfirm('<h4 style="color:red;">cette adresse email existe déjà</h4>!!!');
                      }
-                     //this.storage.set('session',res);
+                
                     
             });
         
@@ -76,6 +77,10 @@ export class DataService {
            this.presentAlertConfirm('Invalid nom d\'utilisateur ou mot de passe !!!');
          }
       });
+  }
+
+  getAllAnnonce(){
+    return this.httpClient.post<Annonce[]>(this.urlRoute,{"method":"getAllAnnonce"});
   }
 
 }

@@ -3,20 +3,36 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Client } from '../models/client';
-//import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
+import { StorageService } from './storage.service';
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
   private ip= 'localhost'
-  private port='8000'
-  private urlRoute = 'http://'+this.ip+':8000/api/';
+  private urlRoute = 'http://'+this.ip+'/api.php';
   constructor(private router:Router,
             private httpClient: HttpClient,
-            public storage: Storage,
+            public storage: StorageService,
             private alertController:AlertController) { }
 
 
+
+        async presentAlertConfirm(_message:string) {
+              const alert = await this.alertController.create({
+                header: 'Error',
+                message: _message,
+                buttons: [
+                 {
+                    text: 'OK',
+                    handler: () => {
+                      console.log('Confirm Okay');
+                    }
+                  }
+                ]
+              });
+          
+              await alert.present();
+        }
 
     register(clientApp:Client) {
         let Data ={
@@ -28,54 +44,36 @@ export class DataService {
                   'dateNaissance':clientApp.dateNaissance,
                   'tel':clientApp.tel,
                   'adresse':clientApp.adresse,
-                  'laltitude':clientApp.laltitude,
-                  'longitude':clientApp.longitude,
                   'ville':clientApp.ville,
-                  'coverture':clientApp.coverture,
-                  'type':clientApp.type
+                  'type':clientApp.type,
+                  'method':'register'
                 };
-        this.httpClient.post(this.urlRoute + 'clients/add',Data)
-                .subscribe(data => {
+        this.httpClient.post(this.urlRoute,Data)
+                .subscribe( (data:Client) => {
                      console.log(data);
+                     if(data.id){
+                      this.router.navigateByUrl('login');
+                     }else{
+                      this.presentAlertConfirm('<h4 style="color:red;">cette adresse email existe déjà</h4>!!!');
+                     }
+                     //this.storage.set('session',res);
+                    
             });
         
     }
 
-
-
-    async presentAlertConfirm(_message:string) {
-            const alert = await this.alertController.create({
-              header: 'Confirmation',
-              message: _message,
-              buttons: [
-                {
-                  text: 'Annuler',
-                  role: 'cancel',
-                  cssClass: 'secondary',
-                  handler: (blah) => {
-                    console.log('Confirm Cancel: ');
-                  }
-                }, {
-                  text: 'OK',
-                  handler: () => {
-                    console.log('Confirm Okay');
-                  }
-                }
-              ]
-            });
-        
-            await alert.present();
-      }
    
  
   
-  connexionClient(data:{email:string,password:string}){
-      this.httpClient.post<{id:string}>(this.urlRoute + 'clients/connexion',data).subscribe(res=>{
-         if(res[0].id){
-           this.storage.set('session',res[0].id);
-           this.router.navigateByUrl('tabs/tab1');
+    login(data){
+    data.method = "login";
+      this.httpClient.post(this.urlRoute,data).subscribe((res:Client)=>{
+       
+         if(res.id){
+           this.storage.set('session',res);
+           this.router.navigateByUrl('home');
          }else{
-           this.presentAlertConfirm('<h4 style="color:red;">Invalid nom d\'utilisateur ou mot de passe </h4>!!!');
+           this.presentAlertConfirm('Invalid nom d\'utilisateur ou mot de passe !!!');
          }
       });
   }

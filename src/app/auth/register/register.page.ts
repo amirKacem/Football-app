@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {  Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Client } from 'src/app/models/client';
+import  {DataService} from 'src/app/services/data.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
@@ -19,15 +20,12 @@ export class RegisterPage implements OnInit {
     dateNaissance:'',
     tel:'',
     adresse:'',
-    laltitude:0,
-    longitude:0,
     ville:'',
-    coverture:'',
     type:''
   }
   myphoto: any;
 
-  constructor(private router:Router,private alertController:AlertController) { 
+  constructor(private router:Router,private alertController:AlertController,private dataService:DataService) { 
 
     this.presentAlertConfirm();
   }
@@ -40,7 +38,7 @@ export class RegisterPage implements OnInit {
   }
 
   register(){
-
+    this.dataService.register(this.data);
   }
 
 
@@ -63,7 +61,6 @@ export class RegisterPage implements OnInit {
         }, {
           text: 'client',
           handler: () => {
-            console.log('Vous Êtes client');
             this.data.type = 'client';
             document.querySelectorAll('.club').forEach(data=>{
               data.remove();

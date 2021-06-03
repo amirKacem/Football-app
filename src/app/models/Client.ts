@@ -8,9 +8,6 @@ export interface Client{
     dateNaissance:string,
     tel:string,
     adresse:string,
-    laltitude:any,
-    longitude:any,
     ville:string,
-    coverture:string,
     type:string
 }

@@ -1,60 +1,43 @@
 <ion-header>
   <ion-toolbar>
       <ion-title>Les Publications</ion-title>
-      <ion-icon class="fontSizeIcon" slot="end" name="send"></ion-icon>
+      <ion-icon class="fontSizeIcon" slot="end" name="send" (click)="addAnnonce()"></ion-icon>
       
   </ion-toolbar>
 </ion-header>
 <ion-content>
 
-  <ng-container *ngIf="data">
-      <ion-card *ngFor="let item of dataAnnonce;let i=index" [id]="'annonce' + item.id">
+      <ion-card *ngFor="let item of annonces;let i=index" [id]="'annonce' + item.id">
           <ion-card-header>
               <ion-grid class="ion-no-padding" fixed>
                   <ion-row>
-                      <ion-col size="1">
-                          <ion-avatar>
-                              <img class="avatarCard" src="{{urlImage + item.url}}" />
-                          </ion-avatar>
-                      </ion-col>
+                     
                       <ion-col size="10" class="nameBrandParent">
-                          <ion-label class="nameBrand" *ngIf="item.type == 'club'">{{item.brand_name}}</ion-label>
-                          <ion-label class="nameBrand" *ngIf="item.type == 'client'">{{item.prenom + ' ' + item.nom}}</ion-label><br>
+                          <ion-label class="nameBrand" *ngIf="item.type == 'club'">Par: {{item.brand_name}}</ion-label>
+                          <ion-label class="nameBrand" *ngIf="item.type == 'client'">Par: {{item.prenom + ' ' + item.nom}}</ion-label><br>
                           <ion-label class="timePost"><span>{{item.updated_at}}</span></ion-label>
-                      </ion-col>
-                      <ion-col size="1">
-                          <ion-icon name="more" (click)="presentActionSheet(item.id)"></ion-icon>
                       </ion-col>
                   </ion-row>
               </ion-grid>
           </ion-card-header>
 
-          <ion-card-content class="ion-no-margin ion-no-padding">
+          <ion-card-content class="">
               <ion-grid fixed class="ion-no-padding">
-                  <ion-row>
-                      <ion-col size="12">
-                          <img class="imagePost" src="{{urlImage + item.image}}" />
-                      </ion-col>
-                  </ion-row>
-                  <ion-row class="bodyItem">
+                 
+                  <ion-row class="bodyItem ion-align-items-center">
                       <ion-col size="12">
                           <h2>
                               <ion-label class="nameBrandButtom">
-                                  <u>{{item.titre}}</u>
+                                  <span>Titre: </span><u>{{item.titre}}</u>
                               </ion-label>
                           </h2>
-                          <p class="descriptionPub">{{item.pub | slice:0:250}}</p>
-                          <ion-grid fixed *ngIf="dataCurrentClient.type == 'client'">
+                
+                          <ion-grid fixed *ngIf="user.type == 'client'">
                               <ion-row>
-                                  <ion-col size="6">
-                                      <ion-button id="btn{{item.id}}" size="small" color="light" (click)="Interesed(item.id)">
-                                          <ion-icon id="btnIconCheck{{item.id}}" size="small" name="checkmark-circle"></ion-icon>&nbsp;&nbsp;<span id="messageInteresse{{item.id}}">Je suis interesé</span>
-                                      </ion-button>
+                                  <ion-col size="12" >
+                                    <p class="descriptionPub">Description: {{item.pub | slice:0:250}}</p>
                                   </ion-col>
-                                  <ion-col size="6" class="ion-no-padding">
-                                      <ion-rating readonly="false" rate="3.5" size="small">
-                                      </ion-rating>
-                                  </ion-col>
+                               
                               </ion-row>
                           </ion-grid>
                       </ion-col>
@@ -62,7 +45,6 @@
               </ion-grid>
           </ion-card-content>
       </ion-card>
-  </ng-container>
   
 
 </ion-content>

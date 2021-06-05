@@ -8,5 +8,7 @@ export interface Annonce{
     image:string,
     titre:string,
     pub:string,
-    updated_at:string
+    dateCreation,
+    updated_at:string,
+    terrain_id:number,
 }

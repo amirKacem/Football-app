@@ -24,16 +24,31 @@ class User{
         return $result;
     }
     public function login($email,$password){
-        $stmt = $this->db->prepare('SELECT * FROM USER WHERE email=:email');
+        $stmt = $this->db->prepare('SELECT * FROM USER WHERE email=:email and password=:password');
         $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":password", $password);
   
         $stmt->execute();
         $result = $stmt->fetch();
         return $result;
     }
 
+    public function update($data){
+        $query = "UPDATE user SET nom=:nom,prenom=:prenom,brand_name=:brand_name,email=:email,password=:password,tel=:tel,adresse=:adresse,dateNaissance=:dateNaissance WHERE id=:id";
+        $stmt = $this->db->prepare($query);
+        $stmt->bindParam(":nom", $data->nom);
+        $stmt->bindParam(":prenom", $data->prenom);
+        $stmt->bindParam(":brand_name", $data->brand_name);
+        $stmt->bindParam(":email", $data->email);
+        $stmt->bindParam(":password", $data->password);
+        $stmt->bindParam(":dateNaissance", $data->dateNaissance);
+        $stmt->bindParam(":tel", $data->tel);
+        $stmt->bindParam(":adresse", $data->adresse);
+        $stmt->bindParam(":id", $data->id);
+        return $stmt->execute();
+    }
     public function register($data){
-        // query to insert record
+
     $query = "INSERT INTO user SET nom=:nom, prenom=:prenom, brand_name=:brand_name, email=:email, password=:password, dateNaissance=:dateNaissance, tel=:tel, adresse=:adresse, ville=:ville, type=:type";
     if($this->getUserByEmail($data->email)){
         return false;

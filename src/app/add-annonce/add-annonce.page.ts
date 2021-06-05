@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Annonce } from '../models/Annonce';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'app-add-annonce',
@@ -9,17 +11,44 @@ import { Annonce } from '../models/Annonce';
 export class AddAnnoncePage implements OnInit {
   data:Annonce={
     id:0,
-    userId:null,
+    nom:'',
+    prenom:'',
+    brand_name:'',  
+    url:'',
+    type:'',
+    image:'',
     titre:'',
     pub:'',
-    image:'',
-    dateCreation:'2019-09-20'
+    updated_at:'',
+    dateCreation:'2021-04-10',
+    terrain_id:0
   }
-  constructor() { }
+  private terrains;
+  constructor(private dataService: DataService,private router:Router) { }
 
   ngOnInit() {
   }
 
+  ionViewWillEnter(){
+    this.getAllTerrains();
+  }
 
+  onFileChange(fileChangeEvent){
+    this.data.image = fileChangeEvent.target.files[0].name;
+
+  }
+
+  addAnnonce(){
+    this.dataService.addAnnonce(this.data);
+    this.router.navigateByUrl('tab1');
+  }
+  getAllTerrains(){
+    this.dataService.getAllTerrains().subscribe((res)=>{
+      this.terrains = res;
+      console.log(this.terrains);
+    });
+
+  }
+  
   
 }

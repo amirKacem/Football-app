@@ -19,22 +19,7 @@ const routes: Routes = [
     path: 'add-terrain',
     loadChildren: () => import('./add-terrain/add-terrain.module').then( m => m.AddTerrainPageModule)
   },
-  {
-    path: 'annonce-detail',
-    loadChildren: () => import('./annonce-detail/annonce-detail.module').then( m => m.AnnonceDetailPageModule)
-  },
-  {
-    path: 'edit-annonce',
-    loadChildren: () => import('./edit-annonce/edit-annonce.module').then( m => m.EditAnnoncePageModule)
-  },
-  {
-    path: 'edit-terrain',
-    loadChildren: () => import('./edit-terrain/edit-terrain.module').then( m => m.EditTerrainPageModule)
-  },
-  {
-    path: 'detail-terrain',
-    loadChildren: () => import('./detail-terrain/detail-terrain.module').then( m => m.DetailTerrainPageModule)
-  },
+
   {
     path: 'login',
     loadChildren: () => import('./auth/login/login.module').then( m => m.LoginPageModule)

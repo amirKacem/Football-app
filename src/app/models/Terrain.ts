@@ -1,11 +1,12 @@
 export interface Terrain{
     id:number,
     user_id:number, 
-    categorie_id:number,
-    url:string,
-    type_id:number,
-    pack_id:number,
+    categorie:string,
+    image_url:string,
+    type:string,
+    description:string,
     nom:string,
     longeur:any,
-    largeur:any
+    largeur:any,
+    prix:number,
 }
